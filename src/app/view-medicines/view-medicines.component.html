@@ -1,0 +1,150 @@
+<style>
+
+    .card-container .card:not(.highlight-card):hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+      }
+    
+      .card {
+        border-radius: 12px;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(99, 219, 193, 0.678);
+      }
+
+      input[type='number']::-webkit-inner-spin-button, 
+input[type='number']::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type='number'] {
+
+    background-color: transparent;
+    resize: none;
+    outline: none;
+}
+
+td, th {
+    vertical-align: middle;
+    display: table-cell;
+}
+    
+    </style>
+    
+    <div class="container card-container" id="main-container">
+        <div class="row">
+            <div *ngFor="let medi of medicines" class="col-md-6 col-xl-3">
+                <div class="card m-b-30">
+                    <div class="card-body row">
+                        <div class="row">
+                            <div class="col-md-6" style="text-align: right;">
+                                Name 
+                            </div>
+                            <div class="col-md-5">
+                                {{medi?.name}}
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                Price 
+                            </div>
+                            <div class="col-md-5">
+                                {{medi?.price}}
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                Buy 
+                            </div>
+                            <div class="col-md-5">
+                                {{medi?.buy}}
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                Free 
+                            </div>
+                            <div class="col-md-5">
+                                {{medi?.free}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="btn-group d-flex justify-content-center">
+                            <a *ngIf="medi?.quantity == 0"  class="btn btn-outline-primary" (click)="addToCart(medi)" ><i class="fa fa-shopping-cart"></i> Add To Cart</a>
+                            <!-- <a class="btn btn-outline-danger"><i class="fa fa-trash-o"></i> Delete</a> -->
+                            <div *ngIf="medi?.quantity != 0" class="col-auto">
+                                <div class="input-group mb-2">
+                                  <div class="input-group-prepend">
+                                    <a (click)="addToCart(medi)" class="input-group-text"><i class="fa fa-plus-circle" style="font-size:23px; cursor: pointer; border: none; color:blue"></i></a>
+                                  </div>
+                                  <input type="number" (ngModelChange)="updateQuantity(medi.name, key.value)" #key="ngModel" value="1" [(ngModel)]="medi.quantity" min="1" max="100" style="text-align: center; width: 50px;">
+                                  <div class="input-group-append">
+                                    <a (click)="decreaseInCart(medi)" class="input-group-text"><i class="fa fa-minus-circle" style="font-size:23px; cursor: pointer; border: none; color:blue"></i></a>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                
+                
+                
+            </div>
+        </div>
+    
+        </div>
+    <hr>
+    <span>Items added to Cart</span>
+    <hr>
+    <div class="container" id="print-section">
+    <table class="table table-striped">
+        <thead class="bg-primary text-white">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <!-- <th scope="col">Details</th> -->
+            <th scope="col">Action</th>ads
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cartItems;let i = index">
+                <th>{{i+1}}</th>
+                <td>{{item.name}}</td>
+                <td><select id="quantity" (change)="setTotal($event,item.name)">
+                    <option [ngValue]="item.quantity" selected hidden>{{item.quantity}}</option>
+                    <option *ngFor='let in of counter(100) ;let i = index' [ngValue]="i+1">
+                      {{i+1}}
+                    </option>    
+                </select></td>
+                <td>{{item.total}}</td>
+                <td><button (click)="removeFromCart(item.name)"><i class="fa fa-trash-o" style=" cursor: pointer; font-size:23px;color:red" aria-hidden="true"></i></button></td>
+                
+                <!-- <td> 
+                    
+                    <a (click)="removeFromCart(item.name)"><i class="fa fa-trash-o" style=" cursor: pointer; font-size:23px;color:red" aria-hidden="true"></i></a>
+                    &nbsp;&nbsp;
+
+                    <a id="details"><i class="fa fa-info-circle" style="cursor: pointer; font-size:23px;color:green"></i></a>
+                </td> -->
+                <!-- <td>
+                    <div class="col-auto">
+                        <div class="input-group mb-2">
+                          <div class="input-group-prepend">
+                            <a (click)="addQuantityInCart(item.name)" class="input-group-text"><i class="fa fa-plus-circle" style="font-size:23px; cursor: pointer; border: none; color:blue"></i></a>
+                          </div>
+                          <input type="number"  (ngModelChange)="updateQuantity(item.name, key.value)" #key="ngModel" [(ngModel)]="item.quantity" value="1" min="1" max="100" style="text-align: center; width: 50px;">
+                          <div class="input-group-append">
+                            <a (click)="removeQuantityInCart(item.name)" class="input-group-text"><i class="fa fa-minus-circle" style="font-size:23px; cursor: pointer; border: none; color:blue"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                </td> -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button printTitle="Print Title" printSectionId = "print-section" ngxPrint>Download</button>
+
+    
+    
+    
+    

@@ -1,0 +1,78 @@
+<style>
+#todo {
+  align-items: center;
+  text-align: center;
+}
+
+#todo .form-group {
+  display: flex;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+label {
+    width:180px;
+}
+
+input, label {
+    float:left;
+}
+
+</style>
+  <!-- <ngb-carousel #carousel [interval]="1000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+    <ng-template ngbSlide *ngFor="let img of images; index as i">
+      <div class="carousel-caption">
+        <h3>My slide {{i + 1}} title</h3>
+      </div>
+      <a href="https://www.google.fr/?q=Number+{{i+1}}" target="_blank" rel="nofollow noopener noreferrer">
+        <div class="picsum-img-wrapper">
+          <img [src]="img" alt="Top Offers {{i + 1}} description" width="100%" height="300px">
+        </div>
+      </a>
+    </ng-template>
+  </ngb-carousel> -->
+
+  <ngb-carousel #carousel [interval]="1000" [pauseOnHover]="pauseOnHover" [pauseOnFocus]="pauseOnFocus" (slide)="onSlide($event)">
+    <ng-template ngbSlide *ngFor="let img of offers; index as i">
+      <div class="carousel-caption">
+        <h3>{{img.description}}</h3>
+      </div>
+      <a href="https://www.google.fr/?q=Number+{{i+1}}" target="_blank" rel="nofollow noopener noreferrer">
+        <div class="picsum-img-wrapper">
+          <img src="{{img.imageUrl}}"  width="100%" height="300px">
+        </div>
+      </a>
+    </ng-template>
+  </ngb-carousel>
+
+  <p class="text-center" style="margin-top:5px ;">
+    <button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()" [attr.aria-expanded]="!isCollapsed"
+      aria-controls="collapseExample">
+      Add New Offer
+    </button>
+  </p>
+  <div #collapse="ngbCollapse" id="todo" class="text-center" [(ngbCollapse)]="isCollapsed">
+    
+    <form id="register" style="text-align: center; " #imageForm="ngForm" (ngSubmit)="addToSlider(imageForm)">
+        
+        
+
+        <div class="form-group">
+            <label for="text">Description</label>
+            <input type="text" ngModel name="description" style="width: 200px;" id="description" placeholder="1234 Main St">
+        </div>
+
+
+        <div class="form-group">
+                <label for="imageUrl">Add file</label>
+                <input type="text" ngModel name="imageUrl" id="imageUrl" placeholder="enter the url">
+        </div>
+        
+
+
+        <div class="text-center">
+            <button mat-raised-button color="accent"  [disabled]="imageForm.invalid" type="submit" class="btn btn-primary">ADD Employee</button>
+        </div>
+
+    </form>
+  </div>

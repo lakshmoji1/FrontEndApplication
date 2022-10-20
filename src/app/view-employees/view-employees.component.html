@@ -1,0 +1,62 @@
+<style>
+
+a {
+    color: black;
+}
+  .card-container .card:not(.highlight-card):hover {
+      transform : translateY(10px);
+      box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+    }
+  
+    .card {
+      border-radius: 12px;
+    }
+
+    ::-webkit-input-placeholder {
+  text-align: center;
+}
+:-moz-placeholder {
+  text-align: center;
+}
+</style>
+<div id="print-section">
+<input type="search" (ngModelChange)="searchEmployee(key.value)" #key="ngModel" ngModel 
+          name="key" id="searchName" class="form-control mr-sm-2" name="name" placeholder="Search for the employee you are looking for here!" width="100%" required>
+          <div class="container">
+  <div class="card-container" id="main-container">
+    <div class="row">
+        <div *ngFor="let emp of employees" class="col-md-6 col-xl-3">
+            <div class="card m-b-30">
+                <div class="card-body row">
+                    <div class="col-6">
+                        <a href=""><img src="{{emp?.imageUrl}}" alt="Not available" class="img-fluid rounded-circle w-60"></a>
+                    </div>
+                    <div class="col-6 card-title align-self-center mb-0">
+                        <h5>{{emp?.name}}</h5>
+                        <p class="m-0">{{emp?.jobTitle}}</p>
+                    </div>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="mailto:{{emp.email}}">{{emp.email}}</a></li>
+                    <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{emp.phone}}</li>
+                </ul>
+                <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                        <a href="/update/{{emp.id}}" routerLinkActive="activebutton" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                        <!-- <a (click)="updateEmployee(emp)" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Update"><i class="fa fa-pencil"></i></a> -->
+                        <a (click)="deleteEmployee(emp)" class="btn btn-danger tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                    </div>
+                    <ul class="social-links list-inline mb-0">
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Skype"><i class="fa fa-skype"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<button printTitle="Print Title" printSectionId = "print-section" ngxPrint>Download</button>
+
